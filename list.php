@@ -1,6 +1,5 @@
 <?php
 	session_start();
-	var_dump($_SESSION);
 ?>
 <html>
 <head>
@@ -17,24 +16,38 @@
 <body>
 <table border="1px" border-collapse="collapse" width="100%">
   <tr>
-	<td align="center"><a href="index.php"><span>Файл index.php</span></a></td>
-    <td align="center"><a href="admin.php"><span>Файл admin.php</span></a></td>
-	<td align="center"><span>Файл list.php</span></td>
-	<td align="center"><a href="test.php"><span>Файл test.php</span></a></td>
+	<td align="center"><a href="index.php"><span>Страница авторизации</span></a></td>
+    <td align="center"><a href="admin.php"><span>Страница загрузки</span></a></td>
+	<td align="center"><span>Страница выбора теста</span></td>
+	<td align="center"><a href="test.php"><span>Страница теста</span></a></td>
   </tr>
  </table>
+<?php 
+	if(empty($_SESSION['username'])){
+		header('refresh: 10; url=index.php');
+		echo '<br>'.'Необходимо пройти авторизацию.';
+	}
+	else{
+?>
 <p>Выберите тест:</p>
  <form enctype="multipart/form-data" action="test.php" method="GET">
- <?php foreach(glob('*.json') as $filename){
-	 echo '<p><input type="radio" name="test" value="'.substr($filename, 0, -5).'">'.$filename.'<br>'.'</p>';
-	 }
-  	if (!file_exists(__DIR__.'/'.$_SESSION['username'].'.json')) {
-	   echo '<p><input placeholder="Ваше имя" name="username"></p>';
-	} else {
-	   $_GET['username'] = $_SESSION['username'];
-	}
+	<?php 
+		foreach(glob('*.json') as $filename){
+			if(mb_stristr($filename, 'testbook')){
+				echo '<p><input type="radio" name="test" value="'.substr($filename, 0, -5).'">'.$filename.'<br>'.'</p>';
+			}			
+		}
+		if (!file_exists(__DIR__.'/'.$_SESSION['username'].'.json')) {
+			echo '<p><input placeholder="Ваше имя" name="username"></p>';
+		} 
+		else {
+			$_GET['username'] = $_SESSION['username'];
+		}
 	?>
-  <p><input type="submit" value="Пройти тест"></p>
+	<p><input type="submit" value="Пройти тест"></p>
+<?php
+	}
+?>
  </form>
 </table>
 </body>

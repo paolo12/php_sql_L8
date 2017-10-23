@@ -23,16 +23,16 @@
 <body>
 <table border="1px" border-collapse="collapse" width="100%">
   <tr>
-	<td <span>Файл index.php</span></td>
-    <td align="center"><a href="admin.php"><span>Файл admin.php</span></a></td>
-	<td align="center"><a href="list.php"><span>Файл list.php</span></a></td>
-	<td align="center"><a href="test.php"><span>Файл test.php</span></a></td>
+	<td align="center"><span>Страница авторизации</span></td>
+    <td align="center"><a href="admin.php"><span>Страница загрузки</span></a></td>
+	<td align="center"><a href="list.php"><span>Страница выбора теста</span></a></td>
+	<td align="center"><a href="test.php"><span>Страница теста</span></a></td>
   </tr>
  </table>
  <p>Предлагаем вам авторизоваться или войти как гость, введя только имя.</p>
 	<?php
 		if(isset($_SESSION['username'])) //если переменной нет, выводим форму{?>			
-			<form action="" method="post">
+			<form action="admin.php" method="post">
 				Логин: <input type="text" name="login" />
 				Пароль: <input type="password" name="password" />
 				<input type="submit" value="Войти"/>
